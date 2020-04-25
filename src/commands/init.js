@@ -1,13 +1,13 @@
 module.exports = {
   name: "init",
   description: "Init project with express",
-  run: async toolbox => {
+  run: async (toolbox) => {
     const {
       system,
       parameters,
       createFile,
       filesystem,
-      print: { error }
+      print: { error },
     } = toolbox;
 
     const name = parameters.first;
@@ -41,8 +41,8 @@ module.exports = {
     const scripts = {
       dev: "nodemon src/server.js",
       build: "sucrase ./src -d ./dist --transforms imports",
-      start: "node dist/server.js"
+      start: "node dist/server.js",
     };
     await filesystem.write(`${name}/package.json`, { ...package, scripts });
-  }
+  },
 };

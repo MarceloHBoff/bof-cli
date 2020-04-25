@@ -1,4 +1,4 @@
-module.exports = toolbox => {
+module.exports = (toolbox) => {
   const {
     filesystem,
     template,
@@ -6,28 +6,29 @@ module.exports = toolbox => {
   } = toolbox;
 
   async function isReactNative() {
-    const package = await filesystem.read('package.json', 'json');
+    const package = await filesystem.read("package.json", "json");
 
-    return !!package.dependencies['react-native'];
+    return !!package.dependencies["react-native"];
   }
 
-  async function createComponent(folder, name) {
+  async function createComponent(folder, name, indexExt, stylesExt) {
     if (!name) {
-      error('Name must be specified');
+      error("Name must be specified");
       return;
     }
 
     await template.generate({
-      template: 'component.js.ejs',
-      target: `${folder}/${name}/index.js`,
+      template:
+        indexExt === "tsx" ? "typescriptComponent.tsx.ejs" : "component.js.ejs",
+      target: `${folder}/${name}/index.${indexExt}`,
       props: { name },
     });
 
     await template.generate({
       template: (await isReactNative())
-        ? 'styles-native.js.ejs'
-        : 'styles.js.ejs',
-      target: `${folder}/${name}/styles.js`,
+        ? "styles-native.js.ejs"
+        : "styles.js.ejs",
+      target: `${folder}/${name}/styles.${stylesExt}`,
     });
 
     success(`Generated ${folder}/${name}.`);

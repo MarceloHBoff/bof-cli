@@ -1,17 +1,18 @@
-const { build } = require('gluegun')
+const { build } = require("gluegun");
 
 async function run(argv) {
   const cli = build()
-    .brand('bof')
+    .brand("bof")
     .src(__dirname)
-    .plugins('./node_modules', { matching: 'bof-*', hidden: true })
+    .plugins("./node_modules", { matching: "bof-*", hidden: true })
     .help()
     .version()
-    .create()
+    .defaultCommand()
+    .create();
 
-  const toolbox = await cli.run(argv)
+  const toolbox = await cli.run(argv);
 
-  return toolbox
+  return toolbox;
 }
 
-module.exports = { run }
+module.exports = { run };

@@ -1,4 +1,4 @@
-module.exports = toolbox => {
+module.exports = (toolbox) => {
   const { template } = toolbox;
 
   async function createFile(path, name) {
